@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TACKY DADDIES - Yeah, We Said It</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400&family=Space+Grotesk:wght@300;400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="%23ff0000"/></svg>'), auto;
+        }
+
+        /* Chaotic background stripes */
+        .chaos-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: 
+                repeating-linear-gradient(
+                    23deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 0, 0, 0.03) 2px,
+                    rgba(255, 0, 0, 0.03) 4px
+                ),
+                repeating-linear-gradient(
+                    67deg,
+                    rgba(0, 100, 255, 0.02),
+                    rgba(0, 100, 255, 0.02) 3px,
+                    transparent 3px,
+                    transparent 6px
+                ),
+                radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
+        }
+
+        /* Floating nonsense elements */
+        .floating-chaos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .float-item {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.1;
+            animation: float-around 15s linear infinite;
+        }
+
+        .float-item:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; color: #ff0000; }
+        .float-item:nth-child(2) { top: 30%; right: 10%; animation-delay: 3s; color: #0066ff; }
+        .float-item:nth-child(3) { bottom: 20%; left: 15%; animation-delay: 6s; color: #ffffff; }
+        .float-item:nth-child(4) { top: 60%; left: 70%; animation-delay: 9s; color: #ff0000; }
+        .float-item:nth-child(5) { bottom: 40%; right: 20%; animation-delay: 12s; color: #0066ff; }
+
+        @keyframes float-around {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -30px) rotate(90deg); }
+            50% { transform: translate(-30px, 50px) rotate(180deg); }
+            75% { transform: translate(-50px, -50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header chaos */
+        .header {
+            text-align: center;
+            margin: 50px 0;
+            transform: rotate(-1deg);
+        }
+
+        .main-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(4rem, 12vw, 10rem);
+            letter-spacing: 8px;
+            color: #fff;
+            text-shadow: 
+                4px 4px 0px #ff0000,
+                8px 8px 0px #0066ff,
+                12px 12px 20px rgba(0,0,0,0.8);
+            animation: title-glitch 3s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes title-glitch {
+            0%, 100% { 
+                transform: translate(0);
+                text-shadow: 
+                    4px 4px 0px #ff0000,
+                    8px 8px 0px #0066ff,
+                    12px 12px 20px rgba(0,0,0,0.8);
+            }
+            10% { 
+                transform: translate(-2px, 2px);
+                text-shadow: 
+                    -4px -4px 0px #ff0000,
+                    8px 8px 0px #0066ff,
+                    12px 12px 20px rgba(0,0,0,0.8);
+            }
+            20% { 
+                transform: translate(2px, -2px);
+                text-shadow: 
+                    4px 4px 0px #0066ff,
+                    -8px -8px 0px #ff0000,
+                    12px 12px 20px rgba(0,0,0,0.8);
+            }
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: #ccc;
+            margin-bottom: 30px;
+            transform: rotate(0.5deg);
+            font-weight: 300;
+        }
+
+        /* Main content grid - intentionally broken */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .left-chaos, .right-chaos {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        .left-chaos {
+            transform: rotate(-2deg);
+            margin-top: 100px;
+        }
+
+        .right-chaos {
+            transform: rotate(1.5deg);
+            margin-top: 150px;
+        }
+
+        .highlight-red { color: #ff4444; font-weight: 700; }
+        .highlight-blue { color: #4488ff; font-weight: 700; }
+        .highlight-white { color: #ffffff; font-weight: 700; text-shadow: 2px 2px 4px #000; }
+
+        /* Email signup - the only "normal" thing */
+        .email-box {
+            background: 
+                linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,240,255,0.95) 100%);
+            border: 4px solid #000;
+            border-radius: 0;
+            padding: 40px;
+            color: #000;
+            position: relative;
+            box-shadow: 
+                8px 8px 0px #ff0000,
+                16px 16px 0px #0066ff,
+                24px 24px 40px rgba(0,0,0,0.4);
+            transform: rotate(-1deg);
+        }
+
+        .email-box::before {
+            content: "ACTUALLY USEFUL STUFF ↓";
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background: #ffff00;
+            color: #000;
+            padding: 5px 15px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transform: rotate(2deg);
+        }
+
+        .signup-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #000;
+            letter-spacing: 3px;
+        }
+
+        .discount-text {
+            background: #ff0000;
+            color: #fff;
+            padding: 12px 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 100%, 15px 100%);
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 15px;
+            border: 3px solid #000;
+            background: #fff;
+            font-size: 1.1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            border-radius: 0;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 0 3px rgba(255,0,0,0.2);
+        }
+
+        .submit-btn {
+            background: #0066ff;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 0;
+            box-shadow: 4px 4px 0px #000;
+            transition: all 0.1s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        .submit-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: none;
+        }
+
+        .success-msg {
+            display: none;
+            background: #00ff00;
+            color: #000;
+            padding: 20px;
+            margin-top: 20px;
+            font-weight: 700;
+            border: 3px solid #000;
+        }
+
+        /* Footer weirdness */
+        .footer {
+            text-align: center;
+            margin: 100px 0 50px 0;
+            font-size: 0.9rem;
+            color: #666;
+            transform: rotate(0.5deg);
+        }
+
+        /* Mobile - make it even weirder */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            
+            .left-chaos, .right-chaos {
+                transform: rotate(0deg);
+                margin-top: 0;
+            }
+            
+            .email-box {
+                transform: rotate(0deg);
+                margin: 0 10px;
+            }
+            
+            .main-title {
+                letter-spacing: 4px;
+            }
+        }
+
+        /* Random hover effects */
+        .hover-chaos:hover {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translate(0); }
+            25% { transform: translate(-2px, 2px); }
+            75% { transform: translate(2px, -2px); }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #ff0000, #0066ff);
+        }
+    </style>
+</head>
+<body>
+    <div class="chaos-bg"></div>
+    
+    <div class="floating-chaos">
+        <div class="float-item">🥸</div>
+        <div class="float-item">🔥</div>
+        <div class="float-item">⚡</div>
+        <div class="float-item">🎯</div>
+        <div class="float-item">💀</div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">TACKY DADDIES</h1>
+            <div class="subtitle">Because safe is mediocre and you know it</div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-chaos">
+                <p>Your cargo shorts aren't a personality. Your <span class="highlight-red">mustache wax collection</span> is getting out of hand. You drive a truck and <span class="highlight-blue">a scooter</span>.</p>
+                
+                <p>This is for dads who wear <span class="highlight-white">flamingo shirts</span> to PTA meetings. Who use flip-flops like a Swiss Army shoe. Who think "business casual" is a suggestion, not a rule.</p>
+            </div>
+
+            <div class="email-box">
+                <h2 class="signup-title">GET WEIRD</h2>
+                <div class="discount-text">25% OFF FIRST ORDER</div>
+                
+                <form id="emailForm">
+                    <div class="form-group">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            placeholder="your.email@whatever.com"
+                            required
+                        >
+                    </div>
+                    <button type="submit" class="submit-btn">SIGN ME UP</button>
+                </form>
+                
+                <div class="success-msg" id="successMsg">
+                    ✅ WELCOME TO THE CHAOS. Check your email for the good stuff.
+                </div>
+            </div>
+
+            <div class="right-chaos">
+                <p>We sell clothes that make <span class="highlight-red">zero sense</span> but somehow work perfectly. Things with pineapples (you decide which way they point). Pants that shouldn't exist. <span class="highlight-blue">Underoos that tell stories</span>.</p>
+                
+                <p>Your kids will be embarrassed. Your spouse will question your choices. <span class="highlight-white">Other dads will secretly be jealous</span>. This is the point.</p>
+                
+                <p class="hover-chaos">Dad fashion doesn't have to be boring. It just has to be <em>you</em>.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Tacky Daddies • Proudly making dads uncomfortable since never</p>
+            <p>We probably ship to your area. Maybe. We'll figure it out.</p>
+        </div>
+    </div>
+
+    <script>
+        // Email form
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const btn = document.querySelector('.submit-btn');
+            const successMsg = document.getElementById('successMsg');
+            
+            if (!email.includes('@')) {
+                alert('Come on, give us a real email');
+                return;
+            }
+            
+            btn.textContent = 'ADDING YOU...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                document.getElementById('emailForm').style.display = 'none';
+                successMsg.style.display = 'block';
+                console.log('Email captured:', email);
+            }, 1200);
+        });
+
+        // Random title glitches
+        setInterval(() => {
+            const title = document.querySelector('.main-title');
+            if (Math.random() > 0.95) {
+                title.style.animation = 'none';
+                setTimeout(() => {
+                    title.style.animation = 'title-glitch 3s ease-in-out infinite';
+                }, 100);
+            }
+        }, 1000);
+
+        // Konami code easter egg (because why not)
+        let konamiCode = [];
+        const targetCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.keyCode);
+            if (konamiCode.length > 10) konamiCode.shift();
+            
+            if (JSON.stringify(konamiCode) === JSON.stringify(targetCode)) {
+                document.body.style.filter = 'hue-rotate(180deg) saturate(2)';
+                setTimeout(() => {
+                    document.body.style.filter = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
